@@ -8,37 +8,31 @@
 <style>
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
   background: #f2f2f2;
 }
 
 header {
-  background: #000;
-  color: #fff;
-  padding: 20px;
+  background: black;
+  color: white;
   text-align: center;
-}
-
-.shop {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  padding: 14px;
+  font-size: 18px;
 }
 
 .product {
-  background: #fff;
+  background: white;
+  margin: 15px;
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  text-align: center;
+  border-radius: 12px;
 }
 
 .product img {
   width: 100%;
-  height: 240px;
-  object-fit: cover;
-  border-radius: 8px;
+  max-height: 360px;
+  object-fit: contain;
+  background: #eee;
+  border-radius: 10px;
 }
 
 .product h3 {
@@ -47,23 +41,18 @@ header {
 
 .price {
   font-weight: bold;
+  font-size: 17px;
   margin-bottom: 10px;
 }
 
-.buy-jd-small {
-  background: #7a7a7a;
-  color: #fff;
+.buy-btn {
+  background: black;
+  color: white;
   border: none;
-  padding: 8px 14px;
-  font-size: 13px;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 4px;
+  padding: 10px 18px;
+  border-radius: 6px;
   cursor: pointer;
-}
-
-.buy-jd-small:hover {
-  background: #5f5f5f;
+  font-size: 14px;
 }
 
 /* MODALS */
@@ -71,148 +60,128 @@ header {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 999;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal-box {
-  background: #fff;
-  max-width: 340px;
-  margin: 15% auto;
+  background: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
+  width: 300px;
+}
+
+.modal-box h3 {
   text-align: center;
+  margin-top: 0;
 }
 
-.modal-box label {
-  display: block;
-  text-align: left;
-  margin: 10px 0 5px;
-}
-
-.modal-box select {
+input, textarea, button {
   width: 100%;
+  margin-top: 8px;
   padding: 10px;
-}
-
-.continue {
-  background: #000;
-  color: #fff;
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border: none;
-  cursor: pointer;
-}
-
-.pay {
-  display: block;
-  margin: 8px 0;
-  padding: 12px;
-  color: #fff;
-  text-decoration: none;
   border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.size-btn {
+  background: #eee;
+  border: none;
   font-weight: bold;
 }
 
-.paypal { background: #003087; }
-.snap { background: #fffc00; color:#000; }
-.whatsapp { background: #25d366; }
-.instagram { background: #e1306c; }
-
-.close {
-  background: none;
-  border: none;
-  margin-top: 10px;
-  color: #666;
-  cursor: pointer;
+.size-btn:hover {
+  background: #ddd;
 }
 
-footer {
-  text-align: center;
-  padding: 15px;
-  font-size: 13px;
-  color: #666;
+.pay-btn {
+  background: black;
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+
+.close-btn {
+  background: #777;
+  color: white;
+  border: none;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>SOUTH SALES</h1>
-  <p>Clothes & Shoes</p>
-</header>
-
-<section class="shop">
+<header>Clothes & Shoes</header>
 
 <div class="product">
-  <img src="images/tracksuit-1.webp" alt="Nike Repel Miler Tracksuit">
-  <img src="images/tracksuit-2.webp" alt="Nike Repel Miler Tracksuit">
-  <img src="images/tracksuit-3.webp" alt="Nike Repel Miler Tracksuit">
-
-  <h3>Nike Repel Miler Tracksuit</h3>
-  <p class="price">£70</p>
-  <button class="buy-jd-small">BUY</button>
+  <img src="images/tracksuit-1.webp" alt="Tracksuit">
+  <h3>Nike Tracksuit</h3>
+  <div class="price">£70</div>
+  <button class="buy-btn" onclick="openSize()">BUY</button>
 </div>
 
-</section>
-
-<footer>
-© 2026 South Sales. All rights reserved.
-</footer>
-
-<!-- SIZE / COLOUR MODAL -->
-<div id="buyModal" class="modal">
+<!-- SIZE -->
+<div id="sizeModal" class="modal">
   <div class="modal-box">
-    <h3>Nike Repel Miler Tracksuit</h3>
-    <p class="price">£70</p>
-
-    <label>Size</label>
-    <select>
-      <option>L</option>
-    </select>
-
-    <label>Colour</label>
-    <select>
-      <option>Black</option>
-    </select>
-
-    <button class="continue" onclick="goPayment()">Continue</button>
-    <button class="close" onclick="closeBuy()">Cancel</button>
+    <h3>Select Size</h3>
+    <button class="size-btn" onclick="openDetails('Small')">Small</button>
+    <button class="size-btn" onclick="openDetails('Medium')">Medium</button>
+    <button class="size-btn" onclick="openDetails('Large')">Large</button>
+    <button class="close-btn" onclick="closeAll()">Cancel</button>
   </div>
 </div>
 
-<!-- PAYMENT MODAL -->
-<div id="paymentModal" class="modal">
+<!-- DETAILS -->
+<div id="detailsModal" class="modal">
   <div class="modal-box">
-    <h3>Choose Payment</h3>
-    <p class="price">£70</p>
+    <h3>Delivery Details</h3>
 
-    <a class="pay paypal" href="PAYPAL_LINK">Pay with PayPal</a>
-    <a class="pay snap" href="SNAPCHAT_LINK">Snapchat (Support)</a>
-    <a class="pay whatsapp" href="WHATSAPP_LINK">WhatsApp</a>
-    <a class="pay instagram" href="INSTAGRAM_LINK">Instagram DM</a>
+    <input type="text" id="name" placeholder="Full Name" required>
+    <textarea id="address" placeholder="Delivery Address" required></textarea>
 
-    <button class="close" onclick="closePayment()">Cancel</button>
+    <p id="sizeText"></p>
+
+    <button class="pay-btn" onclick="payNow()">Pay with PayPal</button>
+    <button class="close-btn" onclick="closeAll()">Cancel</button>
   </div>
 </div>
 
 <script>
-function openBuy() {
-  document.getElementById("buyModal").style.display = "block";
-}
-function closeBuy() {
-  document.getElementById("buyModal").style.display = "none";
-}
-function goPayment() {
-  document.getElementById("buyModal").style.display = "none";
-  document.getElementById("paymentModal").style.display = "block";
-}
-function closePayment() {
-  document.getElementById("paymentModal").style.display = "none";
-}
-</script>
+let chosenSize = "";
 
-</body>
-</html>
+function openSize() {
+  document.getElementById("sizeModal").style.display = "flex";
+}
+
+function openDetails(size) {
+  chosenSize = size;
+  document.getElementById("sizeModal").style.display = "none";
+  document.getElementById("detailsModal").style.display = "flex";
+  document.getElementById("sizeText").innerText = "Size: " + size;
+}
+
+function payNow() {
+  const name = document.getElementById("name").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if (!name || !address) {
+    alert("Please enter name and delivery address");
+    return;
+  }
+
+  const note = encodeURIComponent(
+    "Nike Tracksuit | Size: " + chosenSize +
+    " | Name: " + name +
+    " | Address: " + address
+  );
+
+  window.location.href =
+    "https://www.paypal.me/RichardGigs/70?note=" + note;
+}
+
+function closeAll() {
+  document.getElementById("sizeModal").style.display = "none";
+  document.getElementById
