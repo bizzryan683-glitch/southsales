@@ -12,14 +12,28 @@ body {
   background: #f4f4f4;
 }
 
-header {
-  background: #000;
+/* TOP BAR */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
   color: #fff;
-  text-align: center;
-  padding: 14px;
-  font-size: 18px;
+  padding: 10px 14px;
+  font-size: 13px;
 }
 
+.cart-btn {
+  background: #444;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* PRODUCT CARD */
 .card {
   background: #fff;
   margin: 15px;
@@ -52,7 +66,7 @@ h3 {
 
 .btn-cart {
   flex: 1;
-  background: #e6e6e6;
+  background: #e0e0e0;
   color: #000;
   border: 1px solid #ccc;
   padding: 8px;
@@ -70,11 +84,6 @@ h3 {
   font-size: 13px;
   border-radius: 6px;
   cursor: pointer;
-}
-
-.btn-cart:active,
-.btn-buy:active {
-  opacity: 0.7;
 }
 
 /* POPUPS */
@@ -124,8 +133,13 @@ h3 {
 
 <body>
 
-<header>Clothes & Shoes</header>
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div>PayPal: Richard Gigs (ryankigundu1@gmail.com)</div>
+  <button class="cart-btn" onclick="openCart()">Cart (<span id="cartCount">0</span>)</button>
+</div>
 
+<!-- PRODUCT -->
 <div class="card">
   <img src="images/tracksuit-1.webp" alt="Nike Tracksuit">
   <h3>Nike Tracksuit</h3>
@@ -144,65 +158,4 @@ h3 {
     <h4>Select Size</h4>
     <button onclick="nextStep('Small')">Small</button>
     <button onclick="nextStep('Medium')">Medium</button>
-    <button onclick="nextStep('Large')">Large</button>
-    <button onclick="closeAll()">Cancel</button>
-  </div>
-</div>
-
-<!-- DETAILS -->
-<div id="detailPop" class="popup">
-  <div class="popup-box">
-    <h4>Delivery Details</h4>
-    <input id="name" placeholder="Full Name">
-    <textarea id="address" placeholder="Delivery Address"></textarea>
-    <p id="chosenSize"></p>
-    <button onclick="pay()">Pay with PayPal</button>
-    <button onclick="closeAll()">Cancel</button>
-  </div>
-</div>
-
-<script>
-let size = "";
-
-function addToCart() {
-  alert("Added to cart (cart system coming soon)");
-}
-
-function openSize() {
-  document.getElementById("sizePop").style.display = "block";
-}
-
-function nextStep(s) {
-  size = s;
-  document.getElementById("sizePop").style.display = "none";
-  document.getElementById("detailPop").style.display = "block";
-  document.getElementById("chosenSize").innerText = "Size: " + s;
-}
-
-function pay() {
-  const name = document.getElementById("name").value.trim();
-  const address = document.getElementById("address").value.trim();
-
-  if (!name || !address) {
-    alert("Please enter name and delivery address");
-    return;
-  }
-
-  const note = encodeURIComponent(
-    "Nike Tracksuit | Size: " + size +
-    " | Name: " + name +
-    " | Address: " + address
-  );
-
-  window.location.href =
-    "https://www.paypal.me/RichardGigs/70?note=" + note;
-}
-
-function closeAll() {
-  document.getElementById("sizePop").style.display = "none";
-  document.getElementById("detailPop").style.display = "none";
-}
-</script>
-
-</body>
-</html>
+    <button onclick="nextStep('L
