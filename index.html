@@ -1,89 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>South Sales</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f2f2f2;
-    }
-    header {
-      background: #000;
-      color: #fff;
-      padding: 25px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      letter-spacing: 2px;
-    }
-    header p {
-      margin-top: 8px;
-      color: #ccc;
-    }
-    .shop {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      padding: 25px;
-    }
-    .product {
-      background: #fff;
-      border-radius: 10px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.08);
-    }
-    .product img {
-      width: 100%;
-      height: 230px;
-      object-fit: cover;
-      border-radius: 8px;
-      background: #ddd;
-    }
-    .product h3 {
-      margin: 12px 0 5px;
-    }
-    .product p {
-      color: #555;
-      font-size: 14px;
-    }
-    .buttons a {
-      display: block;
-      margin: 8px 0;
-      padding: 10px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-    .snap {
-      background: #fffc00;
-      color: #000;
-    }
-    .paypal {
-      background: #003087;
-      color: #fff;
-    }
-    .whatsapp {
-      background: #25d366;
-      color: #fff;
-    }
-    .instagram {
-      background: #e1306c;
-      color: #fff;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 13px;
-      color: #666;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>South Sales</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+}
+
+header {
+  background: #000;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.shop {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.product img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product h3 {
+  margin: 10px 0 5px;
+}
+
+.price {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.buy-jd-small {
+  background: #7a7a7a;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.buy-jd-small:hover {
+  background: #5f5f5f;
+}
+
+/* MODALS */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 999;
+}
+
+.modal-box {
+  background: #fff;
+  max-width: 340px;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.modal-box label {
+  display: block;
+  text-align: left;
+  margin: 10px 0 5px;
+}
+
+.modal-box select {
+  width: 100%;
+  padding: 10px;
+}
+
+.continue {
+  background: #000;
+  color: #fff;
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.pay {
+  display: block;
+  margin: 8px 0;
+  padding: 12px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.paypal { background: #003087; }
+.snap { background: #fffc00; color:#000; }
+.whatsapp { background: #25d366; }
+.instagram { background: #e1306c; }
+
+.close {
+  background: none;
+  border: none;
+  margin-top: 10px;
+  color: #666;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 13px;
+  color: #666;
+}
+</style>
 </head>
+
 <body>
 
 <header>
@@ -93,50 +146,70 @@
 
 <section class="shop">
 
-  <!-- PRODUCT 1 -->
   <div class="product">
-    <img src="https://via.placeholder.com/400x300?text=Product+1">
-    <h3>Streetwear Outfit</h3>
-    <p>Contact us to order</p>
-    <div class="buttons">
-      <a class="snap" href="SNAPCHAT_LINK">Customer Service (Snapchat)</a>
-      <a class="paypal" href="PAYPAL_LINK">Pay with PayPal</a>
-      <a class="whatsapp" href="WHATSAPP_LINK">WhatsApp</a>
-      <a class="instagram" href="INSTAGRAM_LINK">Instagram DM</a>
-    </div>
-  </div>
-
-  <!-- PRODUCT 2 -->
-  <div class="product">
-    <img src="https://via.placeholder.com/400x300?text=Product+2">
-    <h3>Casual Shoes</h3>
-    <p>Contact us to order</p>
-    <div class="buttons">
-      <a class="snap" href="SNAPCHAT_LINK">Customer Service (Snapchat)</a>
-      <a class="paypal" href="PAYPAL_LINK">Pay with PayPal</a>
-      <a class="whatsapp" href="WHATSAPP_LINK">WhatsApp</a>
-      <a class="instagram" href="INSTAGRAM_LINK">Instagram DM</a>
-    </div>
-  </div>
-
-  <!-- PRODUCT 3 -->
-  <div class="product">
-    <img src="https://via.placeholder.com/400x300?text=Product+3">
-    <h3>Limited Drop</h3>
-    <p>Contact us to order</p>
-    <div class="buttons">
-      <a class="snap" href="SNAPCHAT_LINK">Customer Service (Snapchat)</a>
-      <a class="paypal" href="PAYPAL_LINK">Pay with PayPal</a>
-      <a class="whatsapp" href="WHATSAPP_LINK">WhatsApp</a>
-      <a class="instagram" href="INSTAGRAM_LINK">Instagram DM</a>
-    </div>
+    <img src="nike-tracksuit-1.webp" alt="Nike Repel Miler Tracksuit">
+    <h3>Nike Repel Miler Tracksuit</h3>
+    <p class="price">£70</p>
+    <button class="buy-jd-small" onclick="openBuy()">Buy</button>
   </div>
 
 </section>
 
 <footer>
-  © 2026 South Sales. All rights reserved.
+© 2026 South Sales. All rights reserved.
 </footer>
+
+<!-- SIZE / COLOUR MODAL -->
+<div id="buyModal" class="modal">
+  <div class="modal-box">
+    <h3>Nike Repel Miler Tracksuit</h3>
+    <p class="price">£70</p>
+
+    <label>Size</label>
+    <select>
+      <option>L</option>
+    </select>
+
+    <label>Colour</label>
+    <select>
+      <option>Black</option>
+    </select>
+
+    <button class="continue" onclick="goPayment()">Continue</button>
+    <button class="close" onclick="closeBuy()">Cancel</button>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div id="paymentModal" class="modal">
+  <div class="modal-box">
+    <h3>Choose Payment</h3>
+    <p class="price">£70</p>
+
+    <a class="pay paypal" href="PAYPAL_LINK">Pay with PayPal</a>
+    <a class="pay snap" href="SNAPCHAT_LINK">Snapchat (Support)</a>
+    <a class="pay whatsapp" href="WHATSAPP_LINK">WhatsApp</a>
+    <a class="pay instagram" href="INSTAGRAM_LINK">Instagram DM</a>
+
+    <button class="close" onclick="closePayment()">Cancel</button>
+  </div>
+</div>
+
+<script>
+function openBuy() {
+  document.getElementById("buyModal").style.display = "block";
+}
+function closeBuy() {
+  document.getElementById("buyModal").style.display = "none";
+}
+function goPayment() {
+  document.getElementById("buyModal").style.display = "none";
+  document.getElementById("paymentModal").style.display = "block";
+}
+function closePayment() {
+  document.getElementById("paymentModal").style.display = "none";
+}
+</script>
 
 </body>
 </html>
