@@ -12,28 +12,29 @@ body {
   background: #f4f4f4;
 }
 
-/* TOP BAR */
-.top-bar {
+header {
+  background: #000;
+  color: #fff;
+  padding: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #111;
-  color: #fff;
-  padding: 10px 14px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .cart-btn {
-  background: #444;
+  background: #222;
   color: #fff;
-  border: none;
   padding: 6px 10px;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 13px;
+}
+
+.info {
   font-size: 12px;
 }
 
-/* PRODUCT CARD */
 .card {
   background: #fff;
   margin: 15px;
@@ -43,50 +44,36 @@ body {
 
 .card img {
   width: 100%;
-  max-height: 350px;
+  max-height: 280px;
   object-fit: contain;
   background: #eee;
   border-radius: 10px;
 }
 
-h3 {
-  margin: 10px 0 5px;
-}
+h3 { margin: 10px 0 5px; }
+.price { font-weight: bold; }
 
-.price {
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.btn-row {
+.actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   margin-top: 10px;
 }
 
-.btn-cart {
+button {
   flex: 1;
-  background: #e0e0e0;
-  color: #000;
-  border: 1px solid #ccc;
-  padding: 8px;
-  font-size: 13px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-buy {
-  flex: 1;
-  background: #000;
+  padding: 10px;
+  background: #111;
   color: #fff;
   border: none;
-  padding: 8px;
-  font-size: 13px;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
 }
 
-/* POPUPS */
+button.grey {
+  background: #555;
+}
+
 .popup {
   display: none;
   position: fixed;
@@ -100,62 +87,168 @@ h3 {
   margin: 60px auto;
   padding: 20px;
   width: 90%;
-  max-width: 320px;
+  max-width: 340px;
   border-radius: 12px;
 }
 
 .popup-box h4 {
-  margin-top: 0;
   text-align: center;
 }
 
-.popup-box input,
-.popup-box textarea {
+.select-group button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+input, textarea {
   width: 100%;
   padding: 10px;
   margin-top: 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
-
-.popup-box button {
-  width: 100%;
-  margin-top: 8px;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  background: #000;
-  color: #fff;
-  cursor: pointer;
-}
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div class="top-bar">
-  <div>PayPal: Richard Gigs (ryankigundu1@gmail.com)</div>
-  <button class="cart-btn" onclick="openCart()">Cart (<span id="cartCount">0</span>)</button>
-</div>
+<header>
+  <div class="info">
+    PayPal: Richard Gigs<br>
+    Snapchat: ukskoobs
+  </div>
+  <div class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+</header>
 
-<!-- PRODUCT -->
 <div class="card">
-  <img src="images/tracksuit-1.webp" alt="Nike Tracksuit">
+  <img src="images/tracksuit-1.webp">
   <h3>Nike Tracksuit</h3>
   <div class="price">£70</div>
-  <p>Customer service: <b>Snapchat ukskoobs</b></p>
 
-  <div class="btn-row">
-    <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
-    <button class="btn-buy" onclick="openSize()">Buy Now</button>
+  <div class="actions">
+    <button class="grey" onclick="openSelect('cart')">Add to Cart</button>
+    <button onclick="openSelect('buy')">Buy Now</button>
   </div>
 </div>
 
-<!-- SIZE -->
-<div id="sizePop" class="popup">
+<!-- SIZE & COLOUR -->
+<div id="selectPop" class="popup">
   <div class="popup-box">
     <h4>Select Size</h4>
-    <button onclick="nextStep('Small')">Small</button>
-    <button onclick="nextStep('Medium')">Medium</button>
-    <button onclick="nextStep('L
+    <div class="select-group">
+      <button onclick="setSize('Small')">Small</button>
+      <button onclick="setSize('Medium')">Medium</button>
+      <button onclick="setSize('Large')">Large</button>
+    </div>
+
+    <h4 style="margin-top:15px">Select Colour</h4>
+    <div class="select-group">
+      <button onclick="setColour('Black')">Black</button>
+      <button onclick="setColour('Grey')">Grey</button>
+    </div>
+
+    <button style="margin-top:15px" onclick="confirmSelection()">Continue</button>
+    <button class="grey" onclick="closeAll()">Cancel</button>
+  </div>
+</div>
+
+<!-- CART -->
+<div id="cartPop" class="popup">
+  <div class="popup-box">
+    <h4>Your Cart</h4>
+    <p id="cartDetails"></p>
+    <button onclick="checkout()">Checkout</button>
+    <button class="grey" onclick="closeAll()">Close</button>
+  </div>
+</div>
+
+<!-- DELIVERY -->
+<div id="deliveryPop" class="popup">
+  <div class="popup-box">
+    <h4>Delivery Address</h4>
+    <input id="name" placeholder="Full Name">
+    <textarea id="address" placeholder="Full Delivery Address"></textarea>
+    <p id="summary"></p>
+    <button onclick="pay()">Pay with PayPal</button>
+    <button class="grey" onclick="closeAll()">Cancel</button>
+  </div>
+</div>
+
+<script>
+let action = "";
+let size = "";
+let colour = "";
+let cart = [];
+
+function openSelect(a) {
+  action = a;
+  size = "";
+  colour = "";
+  document.getElementById("selectPop").style.display = "block";
+}
+
+function setSize(s) { size = s; }
+function setColour(c) { colour = c; }
+
+function confirmSelection() {
+  if (!size || !colour) {
+    alert("Select size and colour");
+    return;
+  }
+
+  document.getElementById("selectPop").style.display = "none";
+
+  if (action === "cart") {
+    cart.push({ size, colour });
+    document.getElementById("cartCount").innerText = cart.length;
+    alert("Added to cart");
+  } else {
+    openDelivery();
+  }
+}
+
+function openCart() {
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+  document.getElementById("cartDetails").innerText =
+    cart.map((i, n) => `Item ${n+1}: ${i.size}, ${i.colour}`).join("\n");
+  document.getElementById("cartPop").style.display = "block";
+}
+
+function checkout() {
+  document.getElementById("cartPop").style.display = "none";
+  openDelivery();
+}
+
+function openDelivery() {
+  document.getElementById("summary").innerText =
+    `Nike Tracksuit | Size: ${size || cart[0].size} | Colour: ${colour || cart[0].colour}`;
+  document.getElementById("deliveryPop").style.display = "block";
+}
+
+function pay() {
+  const name = document.getElementById("name").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if (name.length < 3 || address.length < 10) {
+    alert("Enter a valid full delivery address");
+    return;
+  }
+
+  const note = encodeURIComponent(
+    `Nike Tracksuit | Size: ${size} | Colour: ${colour} | Name: ${name} | Address: ${address}`
+  );
+
+  window.location.href =
+    "https://www.paypal.me/RichardGigs/70?note=" + note;
+}
+
+function closeAll() {
+  document.querySelectorAll(".popup").forEach(p => p.style.display = "none");
+}
+</script>
+
+</body>
+</html>
