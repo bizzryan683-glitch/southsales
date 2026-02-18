@@ -1,142 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>South Sales</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f2f2f2;
-    }
-    header {
-      background: #000;
-      color: #fff;
-      padding: 25px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      letter-spacing: 2px;
-    }
-    header p {
-      margin-top: 8px;
-      color: #ccc;
-    }
-    .shop {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      padding: 25px;
-    }
-    .product {
-      background: #fff;
-      border-radius: 10px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.08);
-    }
-    .product img {
-      width: 100%;
-      height: 230px;
-      object-fit: cover;
-      border-radius: 8px;
-      background: #ddd;
-    }
-    .product h3 {
-      margin: 12px 0 5px;
-    }
-    .product p {
-      color: #555;
-      font-size: 14px;
-    }
-    .buttons a {
-      display: block;
-      margin: 8px 0;
-      padding: 10px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-    .snap {
-      background: #fffc00;
-      color: #000;
-    }
-    .paypal {
-      background: #003087;
-      color: #fff;
-    }
-    .whatsapp {
-      background: #25d366;
-      color: #fff;
-    }
-    .instagram {
-      background: #e1306c;
-      color: #fff;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 13px;
-      color: #666;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>South Sales</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+header {
+  background: #000;
+  color: #fff;
+  padding: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-btn {
+  background: #222;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.card {
+  background: #fff;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+/* IMAGE GALLERY */
+.main-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  background: #eee;
+  border-radius: 10px;
+}
+
+.thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.thumbs img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background: #eee;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.thumbs img:hover {
+  border-color: #000;
+}
+
+h3 { margin: 10px 0 5px; }
+.price { font-weight: bold; }
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+button {
+  flex: 1;
+  padding: 10px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button.grey { background: #555; }
+
+/* POPUPS */
+.popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 999;
+}
+
+.popup-box {
+  background: white;
+  margin: 60px auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 340px;
+  border-radius: 12px;
+}
+
+.popup-box h4 { text-align: center; }
+
+.select-group button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+</style>
 </head>
+
 <body>
 
 <header>
-  <h1>SOUTH SALES</h1>
-  <p>Clothes & Shoes</p>
+  <div class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
 </header>
 
-<section class="shop">
+<div class="card">
 
-  <!-- PRODUCT 1 -->
-  <div class="product">
-    <img src="https://via.placeholder.com/400x300?text=Product+1">
-    <h3>Streetwear Outfit</h3>
-    <p>Contact us to order</p>
-    <div class="buttons">
-      <a class="snap" href="SNAPCHAT_LINK">Customer Service (Snapchat)</a>
-      <a class="paypal" href="PAYPAL_LINK">Pay with PayPal</a>
-      <a class="whatsapp" href="WHATSAPP_LINK">WhatsApp</a>
-      <a class="instagram" href="INSTAGRAM_LINK">Instagram DM</a>
-    </div>
+  <!-- IMAGE GALLERY -->
+  <img id="mainImage" src="images/tracksuit-1.webp" class="main-img">
+
+  <div class="thumbs">
+    <img src="images/tracksuit-1.webp" onclick="changeImg(this.src)">
+    <img src="images/tracksuit-2.webp" onclick="changeImg(this.src)">
+    <img src="images/tracksuit-3.webp" onclick="changeImg(this.src)">
   </div>
 
-  <!-- PRODUCT 2 -->
-  <div class="product">
-    <img src="https://via.placeholder.com/400x300?text=Product+2">
-    <h3>Casual Shoes</h3>
-    <p>Contact us to order</p>
-    <div class="buttons">
-      <a class="snap" href="SNAPCHAT_LINK">Customer Service (Snapchat)</a>
-      <a class="paypal" href="PAYPAL_LINK">Pay with PayPal</a>
-      <a class="whatsapp" href="WHATSAPP_LINK">WhatsApp</a>
-      <a class="instagram" href="INSTAGRAM_LINK">Instagram DM</a>
-    </div>
+  <h3>Nike Tracksuit</h3>
+  <div class="price">£70</div>
+
+  <div class="actions">
+    <button class="grey" onclick="openSelect('cart')">Add to Cart</button>
+    <button onclick="openSelect('buy')">Buy Now</button>
   </div>
+</div>
 
-  <!-- PRODUCT 3 -->
-  <div class="product">
-    <img src="https://via.placeholder.com/400x300?text=Product+3">
-    <h3>Limited Drop</h3>
-    <p>Contact us to order</p>
-    <div class="buttons">
-      <a class="snap" href="SNAPCHAT_LINK">Customer Service (Snapchat)</a>
-      <a class="paypal" href="PAYPAL_LINK">Pay with PayPal</a>
-      <a class="whatsapp" href="WHATSAPP_LINK">WhatsApp</a>
-      <a class="instagram" href="INSTAGRAM_LINK">Instagram DM</a>
+<!-- SIZE & COLOUR -->
+<div id="selectPop" class="popup">
+  <div class="popup-box">
+    <h4>Select Size</h4>
+    <div class="select-group">
+      <button onclick="setSize('Small')">Small</button>
+      <button onclick="setSize('Medium')">Medium</button>
+      <button onclick="setSize('Large')">Large</button>
     </div>
+
+    <h4 style="margin-top:15px">Select Colour</h4>
+    <div class="select-group">
+      <button onclick="setColour('Black')">Black</button>
+      <button onclick="setColour('Grey')">Grey</button>
+    </div>
+
+    <button style="margin-top:15px" onclick="confirmSelection()">Continue</button>
+    <button class="grey" onclick="closeAll()">Cancel</button>
   </div>
+</div>
 
-</section>
+<!-- CART -->
+<div id="cartPop" class="popup">
+  <div class="popup-box">
+    <h4>Your Cart</h4>
+    <p id="cartDetails"></p>
+    <button onclick="checkout()">Checkout</button>
+    <button class="grey" onclick="closeAll()">Close</button>
+  </div>
+</div>
 
-<footer>
-  © 2026 South Sales. All rights reserved.
-</footer>
+<!-- DELIVERY -->
+<div id="deliveryPop" class="popup">
+  <div class="popup-box">
+    <h4>Delivery Address</h4>
+    <input id="name" placeholder="Full Name">
+    <textarea id="address" placeholder="Full Delivery Address"></textarea>
+    <p id="summary"></p>
+    <button onclick="pay()">Pay with PayPal</button>
+    <button class="grey" onclick="closeAll()">Cancel</button>
+  </div>
+</div>
+
+<script>
+let action = "";
+let size = "";
+let colour = "";
+let cart = [];
+
+function changeImg(src) {
+  document.getElementById("mainImage").src = src;
+}
+
+function openSelect(a) {
+  action = a;
+  size = "";
+  colour = "";
+  document.getElementById("selectPop").style.display = "block";
+}
+
+function setSize(s) { size = s; }
+function setColour(c) { colour = c; }
+
+function confirmSelection() {
+  if (!size || !colour) {
+    alert("Select size and colour");
+    return;
+  }
+
+  document.getElementById("selectPop").style.display = "none";
+
+  if (action === "cart") {
+    cart.push({ size, colour });
+    document.getElementById("cartCount").innerText = cart.length;
+    alert("Added to cart");
+  } else {
+    openDelivery();
+  }
+}
+
+function openCart() {
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+  document.getElementById("cartDetails").innerText =
+    cart.map((i, n) => `Item ${n+1}: ${i.size}, ${i.colour}`).join("\n");
+  document.getElementById("cartPop").style.display = "block";
+}
+
+function checkout() {
+  document.getElementById("cartPop").style.display = "none";
+  openDelivery();
+}
+
+function openDelivery() {
+  document.getElementById("summary").innerText =
+    `Nike Tracksuit | Size: ${size || cart[0].size} | Colour: ${colour || cart[0].colour}`;
+  document.getElementById("deliveryPop").style.display = "block";
+}
+
+function pay() {
+  const name = document.getElementById("name").value.trim();
+  const address = document.getElementById("address").value.trim();
+
+  if (name.length < 3 || address.length < 10) {
+    alert("Enter a valid full delivery address");
+    return;
+  }
+
+  const note = encodeURIComponent(
+    `Nike Tracksuit | Size: ${size} | Colour: ${colour} | Name: ${name} | Address: ${address}`
+  );
+
+  window.location.href =
+    "https://www.paypal.me/RichardGigs/70?note=" + note;
+}
+
+function closeAll() {
+  document.querySelectorAll(".popup").forEach(p => p.style.display = "none");
+}
+</script>
 
 </body>
 </html>
