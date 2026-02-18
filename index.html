@@ -17,9 +17,7 @@ header {
   color: #fff;
   padding: 12px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
+  justify-content: flex-end;
 }
 
 .cart-btn {
@@ -31,10 +29,6 @@ header {
   font-size: 13px;
 }
 
-.info {
-  font-size: 12px;
-}
-
 .card {
   background: #fff;
   margin: 15px;
@@ -42,12 +36,33 @@ header {
   border-radius: 12px;
 }
 
-.card img {
+/* IMAGE GALLERY */
+.main-img {
   width: 100%;
-  max-height: 280px;
+  max-height: 300px;
   object-fit: contain;
   background: #eee;
   border-radius: 10px;
+}
+
+.thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.thumbs img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background: #eee;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.thumbs img:hover {
+  border-color: #000;
 }
 
 h3 { margin: 10px 0 5px; }
@@ -56,7 +71,7 @@ h3 { margin: 10px 0 5px; }
 .actions {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 button {
@@ -70,10 +85,9 @@ button {
   font-size: 14px;
 }
 
-button.grey {
-  background: #555;
-}
+button.grey { background: #555; }
 
+/* POPUPS */
 .popup {
   display: none;
   position: fixed;
@@ -91,9 +105,7 @@ button.grey {
   border-radius: 12px;
 }
 
-.popup-box h4 {
-  text-align: center;
-}
+.popup-box h4 { text-align: center; }
 
 .select-group button {
   width: 100%;
@@ -113,15 +125,20 @@ input, textarea {
 <body>
 
 <header>
-  <div class="info">
-    PayPal: Richard Gigs<br>
-    Snapchat: ukskoobs
-  </div>
   <div class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
 </header>
 
 <div class="card">
-  <img src="images/tracksuit-1.webp">
+
+  <!-- IMAGE GALLERY -->
+  <img id="mainImage" src="images/tracksuit-1.webp" class="main-img">
+
+  <div class="thumbs">
+    <img src="images/tracksuit-1.webp" onclick="changeImg(this.src)">
+    <img src="images/tracksuit-2.webp" onclick="changeImg(this.src)">
+    <img src="images/tracksuit-3.webp" onclick="changeImg(this.src)">
+  </div>
+
   <h3>Nike Tracksuit</h3>
   <div class="price">£70</div>
 
@@ -179,6 +196,10 @@ let action = "";
 let size = "";
 let colour = "";
 let cart = [];
+
+function changeImg(src) {
+  document.getElementById("mainImage").src = src;
+}
 
 function openSelect(a) {
   action = a;
