@@ -3,111 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <title>South Sales</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f2f2f2;
+  background: #f4f4f4;
 }
 
 header {
-  background: black;
-  color: white;
+  background: #000;
+  color: #fff;
   text-align: center;
   padding: 14px;
   font-size: 18px;
 }
 
-.product {
-  background: white;
+.card {
+  background: #fff;
   margin: 15px;
   padding: 15px;
   border-radius: 12px;
 }
 
-.product img {
+.card img {
   width: 100%;
-  max-height: 360px;
+  max-height: 350px;
   object-fit: contain;
   background: #eee;
   border-radius: 10px;
 }
 
-.product h3 {
+h3 {
   margin: 10px 0 5px;
 }
 
 .price {
   font-weight: bold;
-  font-size: 17px;
   margin-bottom: 10px;
 }
 
-.buy-btn {
-  background: black;
-  color: white;
+button {
+  width: 100%;
+  padding: 12px;
+  background: #000;
+  color: #fff;
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 15px;
   cursor: pointer;
-  font-size: 14px;
 }
 
-/* MODALS */
-.modal {
+button:active {
+  opacity: 0.7;
+}
+
+/* POPUPS */
+.popup {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  z-index: 999;
 }
 
-.modal-box {
+.popup-box {
   background: white;
+  margin: 60px auto;
   padding: 20px;
+  width: 90%;
+  max-width: 320px;
   border-radius: 12px;
-  width: 300px;
 }
 
-.modal-box h3 {
-  text-align: center;
+.popup-box h4 {
   margin-top: 0;
+  text-align: center;
 }
 
-input, textarea, button {
+.popup-box input,
+.popup-box textarea {
   width: 100%;
-  margin-top: 8px;
   padding: 10px;
+  margin-top: 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-.size-btn {
-  background: #eee;
-  border: none;
-  font-weight: bold;
-}
-
-.size-btn:hover {
-  background: #ddd;
-}
-
-.pay-btn {
-  background: black;
-  color: white;
-  border: none;
-  font-weight: bold;
-}
-
-.close-btn {
-  background: #777;
-  color: white;
-  border: none;
 }
 </style>
 </head>
@@ -116,64 +97,62 @@ input, textarea, button {
 
 <header>Clothes & Shoes</header>
 
-<div class="product">
-  <img src="images/tracksuit-1.webp" alt="Tracksuit">
+<div class="card">
+  <img src="images/tracksuit-1.webp">
   <h3>Nike Tracksuit</h3>
   <div class="price">£70</div>
-  <button class="buy-btn" onclick="openSize()">BUY</button>
+  <p>Snapchat: <b>ukskoobs</b></p>
+  <button id="buyBtn">BUY</button>
 </div>
 
 <!-- SIZE -->
-<div id="sizeModal" class="modal">
-  <div class="modal-box">
-    <h3>Select Size</h3>
-    <button class="size-btn" onclick="openDetails('Small')">Small</button>
-    <button class="size-btn" onclick="openDetails('Medium')">Medium</button>
-    <button class="size-btn" onclick="openDetails('Large')">Large</button>
-    <button class="close-btn" onclick="closeAll()">Cancel</button>
+<div id="sizePop" class="popup">
+  <div class="popup-box">
+    <h4>Select Size</h4>
+    <button onclick="nextStep('Small')">Small</button><br><br>
+    <button onclick="nextStep('Medium')">Medium</button><br><br>
+    <button onclick="nextStep('Large')">Large</button><br><br>
+    <button onclick="closeAll()">Cancel</button>
   </div>
 </div>
 
 <!-- DETAILS -->
-<div id="detailsModal" class="modal">
-  <div class="modal-box">
-    <h3>Delivery Details</h3>
-
-    <input type="text" id="name" placeholder="Full Name" required>
-    <textarea id="address" placeholder="Delivery Address" required></textarea>
-
-    <p id="sizeText"></p>
-
-    <button class="pay-btn" onclick="payNow()">Pay with PayPal</button>
-    <button class="close-btn" onclick="closeAll()">Cancel</button>
+<div id="detailPop" class="popup">
+  <div class="popup-box">
+    <h4>Delivery Details</h4>
+    <input id="name" placeholder="Full Name">
+    <textarea id="address" placeholder="Delivery Address"></textarea>
+    <p id="chosenSize"></p>
+    <button onclick="pay()">Pay with PayPal</button><br><br>
+    <button onclick="closeAll()">Cancel</button>
   </div>
 </div>
 
 <script>
-let chosenSize = "";
+let size = "";
 
-function openSize() {
-  document.getElementById("sizeModal").style.display = "flex";
+document.getElementById("buyBtn").onclick = function () {
+  document.getElementById("sizePop").style.display = "block";
+};
+
+function nextStep(s) {
+  size = s;
+  document.getElementById("sizePop").style.display = "none";
+  document.getElementById("detailPop").style.display = "block";
+  document.getElementById("chosenSize").innerText = "Size: " + s;
 }
 
-function openDetails(size) {
-  chosenSize = size;
-  document.getElementById("sizeModal").style.display = "none";
-  document.getElementById("detailsModal").style.display = "flex";
-  document.getElementById("sizeText").innerText = "Size: " + size;
-}
-
-function payNow() {
+function pay() {
   const name = document.getElementById("name").value.trim();
   const address = document.getElementById("address").value.trim();
 
   if (!name || !address) {
-    alert("Please enter name and delivery address");
+    alert("Enter name and address");
     return;
   }
 
   const note = encodeURIComponent(
-    "Nike Tracksuit | Size: " + chosenSize +
+    "Nike Tracksuit | Size: " + size +
     " | Name: " + name +
     " | Address: " + address
   );
@@ -183,5 +162,9 @@ function payNow() {
 }
 
 function closeAll() {
-  document.getElementById("sizeModal").style.display = "none";
-  document.getElementById
+  document.getElementById("sizePop").style.display = "none";
+  document.getElementById("detailPop").style.display = "none";
+}
+</script>
+
+</
